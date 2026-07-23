@@ -8,14 +8,15 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
-    // Matches the auth-service secret
-    private static final String SECRET = "Y29tcGxleC1zdXBlci1zZWNyZXQta2V5LXRoYXQtbXVzdC1iZS1hdC1sZWFzdC0yNTYtYml0cy1sb25n";
+    @Value("${jwt.secret}")
+    private String secret;
 
     public AuthenticationFilter() {
         super(Config.class);
@@ -38,7 +39,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
             }
 
             try {
-                Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+                Key key = Keys.hmacShaKeyFor(secret.getBytes());
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(key)
                         .build()

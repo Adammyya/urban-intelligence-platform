@@ -28,3 +28,6 @@ spring:
             - Path=/api/v1/sensors/**
           filters:
             - AuthenticationFilter
+
+jwt:
+  secret: ${JWT_SECRET}
