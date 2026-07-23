@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useUIStore } from '../../store/useUIStore';
 import { 
   LayoutDashboard, 
   Map, 
@@ -25,6 +26,9 @@ const navItems = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const isSidebarOpen = useUIStore(state => state.isSidebarOpen);
+
+  if (!isSidebarOpen) return null;
 
   return (
     <aside className="w-64 h-full bg-sidebar border-r border-gray-800/50 flex flex-col shadow-2xl z-20">

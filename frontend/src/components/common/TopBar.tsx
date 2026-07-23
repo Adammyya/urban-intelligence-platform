@@ -1,19 +1,32 @@
-import { Search, Bell, User, CloudRain } from 'lucide-react';
+import { Search, Bell, User, CloudRain, Menu } from 'lucide-react';
+import { useUIStore } from '../../store/useUIStore';
 
 const TopBar = () => {
+  const toggleSidebar = useUIStore(state => state.toggleSidebar);
+
   return (
     <header className="h-16 bg-background-dark/80 backdrop-blur-md border-b border-gray-800/50 flex items-center justify-between px-6 z-10 sticky top-0">
       
-      {/* Search Bar */}
-      <div className="relative w-96">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-500" />
+      <div className="flex items-center gap-4">
+        {/* Sidebar Toggle */}
+        <button 
+          onClick={toggleSidebar}
+          className="p-2 -ml-2 text-gray-400 hover:text-cyber-blue transition-colors rounded-lg hover:bg-white/5"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        {/* Search Bar */}
+        <div className="relative w-96">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-500" />
+          </div>
+          <input
+            type="text"
+            className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg bg-black/30 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-colors sm:text-sm"
+            placeholder="Search locations, sensors, incidents..."
+          />
         </div>
-        <input
-          type="text"
-          className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg bg-black/30 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-colors sm:text-sm"
-          placeholder="Search locations, sensors, incidents..."
-        />
       </div>
 
       {/* Right Side Info */}
