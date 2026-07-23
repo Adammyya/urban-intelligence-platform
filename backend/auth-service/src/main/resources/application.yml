@@ -1,3 +1,11 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: auth-service
+
+jwt:
+  # Base64 encoded secret key for signing tokens (minimum 256-bit)
+  secret: Y29tcGxleC1zdXBlci1zZWNyZXQta2V5LXRoYXQtbXVzdC1iZS1hdC1sZWFzdC0yNTYtYml0cy1sb25n
+  expiration: 86400000 # 24 hours
