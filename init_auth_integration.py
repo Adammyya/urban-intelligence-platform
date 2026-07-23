@@ -57,7 +57,7 @@ spring:
 
 jwt:
   # Base64 encoded secret key for signing tokens (minimum 256-bit)
-  secret: Y29tcGxleC1zdXBlci1zZWNyZXQta2V5LXRoYXQtbXVzdC1iZS1hdC1sZWFzdC0yNTYtYml0cy1sb25n
+  secret: ${JWT_SECRET}
   expiration: 86400000 # 24 hours
 """
 write_file(r"C:\Users\Dell\Desktop\Adamya\Projects\SYNAPSE\backend\auth-service\src\main\resources\application.yml", auth_yml)
