@@ -1,15 +1,32 @@
-# Frontend Application
+# React + TypeScript + Vite
 
-This directory contains the SYNAPSE Smart City Command Center UI. Built with React, TypeScript, and Vite.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Purpose
-Provide an ultra-modern, glassmorphism-themed, highly interactive dashboard.
+Currently, two official plugins are available:
 
-## Responsibility
-Visualize real-time traffic, sensor data, and ML predictions. Connect to backend services via REST and WebSockets.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Technologies
-React, TypeScript, Vite, TailwindCSS, React Router, Framer Motion, React Query, Chart.js, Leaflet, Socket.io Client.
+## React Compiler
 
-## Scalability
-Feature-based folder structure (`src/features/`) allows independent development of dashboard panels.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the Oxlint configuration
+
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+```
+
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
