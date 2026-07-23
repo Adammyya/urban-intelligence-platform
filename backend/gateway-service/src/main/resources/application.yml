@@ -1,3 +1,26 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:5173" # React default port
+              - "http://127.0.0.1:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+      routes:
+        - id: sensor-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/sensors/**

@@ -1,17 +1,10 @@
+import LiveMapWidget from '../components/map/LiveMapWidget';
+
 const DashboardPage = () => {
   return (
     <div className="absolute inset-0 bg-[#050505]">
-      {/* Background Map Placeholder (Will be Leaflet later) */}
-      <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: 'radial-gradient(circle at center, #1a2035 0%, #050505 100%)',
-        backgroundSize: 'cover'
-      }}>
-        {/* Placeholder Map Grid */}
-        <div className="w-full h-full" style={{
-          backgroundImage: 'linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px)',
-          backgroundSize: '50px 50px'
-        }}></div>
-      </div>
+      {/* Interactive React Leaflet Map */}
+      <LiveMapWidget />
 
       {/* Floating UI Elements */}
       <div className="absolute inset-0 p-6 pointer-events-none flex flex-col justify-end">
