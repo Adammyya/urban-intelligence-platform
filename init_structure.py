@@ -1,0 +1,126 @@
+import os
+import sys
+
+base_dir = r"C:\Users\Dell\Desktop\Adamya\Projects\SYNAPSE"
+
+folders = [
+    ".github/workflows",
+    ".github/ISSUE_TEMPLATE",
+    "backend/gateway-service",
+    "backend/auth-service",
+    "backend/user-service",
+    "backend/sensor-service",
+    "backend/traffic-service",
+    "backend/incident-service",
+    "backend/prediction-service",
+    "backend/recommendation-service",
+    "backend/notification-service",
+    "backend/analytics-service",
+    "backend/common/config",
+    "backend/common/constants",
+    "backend/common/dto",
+    "backend/common/exception",
+    "backend/common/mapper",
+    "backend/common/security",
+    "backend/common/util",
+    "backend/common/validation",
+    "frontend/public",
+    "frontend/src/api",
+    "frontend/src/assets",
+    "frontend/src/components",
+    "frontend/src/constants",
+    "frontend/src/context",
+    "frontend/src/features/dashboard",
+    "frontend/src/features/traffic",
+    "frontend/src/features/sensors",
+    "frontend/src/features/incidents",
+    "frontend/src/features/predictions",
+    "frontend/src/features/analytics",
+    "frontend/src/features/alerts",
+    "frontend/src/features/ai-models",
+    "frontend/src/features/settings",
+    "frontend/src/hooks",
+    "frontend/src/layouts",
+    "frontend/src/pages",
+    "frontend/src/routes",
+    "frontend/src/services",
+    "frontend/src/store",
+    "frontend/src/styles",
+    "frontend/src/types",
+    "frontend/src/utils",
+    "ml/fastapi",
+    "ml/datasets",
+    "ml/preprocessing",
+    "ml/training",
+    "ml/evaluation",
+    "ml/inference",
+    "ml/experiments",
+    "ml/models",
+    "ml/notebooks",
+    "ml/saved_models",
+    "infrastructure/docker",
+    "infrastructure/kubernetes",
+    "infrastructure/nginx",
+    "infrastructure/kafka",
+    "infrastructure/postgres",
+    "infrastructure/redis",
+    "infrastructure/monitoring/grafana",
+    "infrastructure/monitoring/prometheus",
+    "infrastructure/terraform",
+    "docs/architecture",
+    "docs/api",
+    "docs/database",
+    "docs/deployment",
+    "docs/diagrams",
+    "docs/adr",
+    "docs/research",
+    "docs/benchmarks",
+    "docs/sequence-diagrams",
+    "docs/class-diagrams",
+    "datasets",
+    "testing/integration",
+    "testing/load",
+    "testing/performance",
+    "testing/security",
+    "scripts",
+    "screenshots"
+]
+
+files = {
+    ".github/workflows/backend.yml": "# Backend CI pipeline\n",
+    ".github/workflows/frontend.yml": "# Frontend CI pipeline\n",
+    ".github/workflows/ml.yml": "# ML CI pipeline\n",
+    ".github/workflows/docker.yml": "# Docker Build pipeline\n",
+    ".github/PULL_REQUEST_TEMPLATE.md": "## Pull Request\n\n### Description\n\n### Type of change\n- [ ] Bug fix\n- [ ] New feature\n- [ ] Breaking change\n",
+    ".github/CODEOWNERS": "* @admin\n",
+    "backend/README.md": "# Backend Services\n\nThis directory contains all Spring Boot microservices for the SYNAPSE platform. Each service is independently deployable and scalable.\n\n## Purpose\nProvide robust, secure, and scalable REST APIs, handle authentication, process data streams, and serve as the intermediary between the frontend and data layers.\n\n## Responsibility\nBusiness logic, data persistence, and API orchestration.\n\n## Technologies\nJava 21, Spring Boot, Spring Cloud Gateway, Hibernate, PostgreSQL, Redis, Apache Kafka.\n\n## Scalability\nMicroservices can be scaled horizontally and deployed independently. `common` library ensures DRY principles.\n",
+    "frontend/README.md": "# Frontend Application\n\nThis directory contains the SYNAPSE Smart City Command Center UI. Built with React, TypeScript, and Vite.\n\n## Purpose\nProvide an ultra-modern, glassmorphism-themed, highly interactive dashboard.\n\n## Responsibility\nVisualize real-time traffic, sensor data, and ML predictions. Connect to backend services via REST and WebSockets.\n\n## Technologies\nReact, TypeScript, Vite, TailwindCSS, React Router, Framer Motion, React Query, Chart.js, Leaflet, Socket.io Client.\n\n## Scalability\nFeature-based folder structure (`src/features/`) allows independent development of dashboard panels.\n",
+    "frontend/src/App.tsx": "import React from 'react';\n\nconst App = () => {\n  return (\n    <div>\n      <h1>SYNAPSE Command Center</h1>\n    </div>\n  );\n};\n\nexport default App;\n",
+    "frontend/src/main.tsx": "import React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\nimport './styles/index.css';\n\nReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);\n",
+    "ml/README.md": "# Machine Learning Engine\n\nDedicated environment for Machine Learning research, model training, and inference serving.\n\n## Purpose\nData engineering, feature extraction, training predictive models (congestion, accidents), and exposing a fast inference API.\n\n## Technologies\nPython, FastAPI, Scikit-learn, XGBoost, TensorFlow, PyTorch.\n\n## Scalability\nSeparation of training and inference allows deploying lightweight inference containers while running heavy training jobs on GPU clusters.\n",
+    "infrastructure/README.md": "# Infrastructure & DevOps\n\nDefines the underlying infrastructure, deployment configurations, and operational tooling.\n\n## Purpose\nContainerize all services, orchestrate deployments, set up messaging queues, and provide observability.\n\n## Technologies\nDocker, Docker Compose, Kubernetes, Terraform, Nginx, Kafka, PostgreSQL, Redis, Prometheus, Grafana.\n\n## Scalability\nInfrastructure as Code (Terraform) and Kubernetes manifests prepare the platform for auto-scaling and repeatable deployments.\n",
+    "docs/README.md": "# Project Documentation\n\nCentral repository for all project documentation, architecture decisions, and research notes.\n\n## Purpose\nStore ADRs, system diagrams, sequence diagrams, API specs, and database schemas.\n",
+    "testing/README.md": "# Quality Assurance\n\nContains cross-cutting, system-level testing suites that span multiple microservices.\n\n## Purpose\nPerform end-to-end integration, load, performance, and security testing.\n\n## Technologies\nJMeter, Gatling, Postman, Cypress/Playwright.\n",
+    "LICENSE": "MIT License\n",
+    "README.md": "# SYNAPSE - Scalable Intelligent Urban Intelligence Platform\n\nProduction-grade urban monitoring and traffic prediction platform.\n\n## Overview\nDesigned to collect sensor data, process streaming events, predict congestion, and generate AI recommendations. Resembles a Smart City Command Center.\n\n## Sprints\n- [x] Sprint 1: Folder Architecture\n- [ ] Sprint 2: High-level System Architecture & DB Schema\n- [ ] Sprint 3: API Contracts\n- [ ] Sprint 4: UI Wireframes\n- [ ] Sprint 5: Backend Skeleton\n- [ ] Sprint 6: Frontend Skeleton\n",
+    "CONTRIBUTING.md": "# Contributing Guidelines\n\nPlease follow the standard GitHub flow for contributing to SYNAPSE.\n",
+    "CHANGELOG.md": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n",
+    "CODE_OF_CONDUCT.md": "# Code of Conduct\n\nPlease treat all contributors with respect.\n",
+    ".editorconfig": "root = true\n\n[*]\ncharset = utf-8\nindent_style = space\nindent_size = 2\nend_of_line = lf\ninsert_final_newline = true\ntrim_trailing_whitespace = true\n",
+    ".gitignore": "node_modules/\n.idea/\ntarget/\n*.log\n*.class\n.env\n__pycache__/\n*.pyc\nvenv/\n.venv/\n",
+    ".env.example": "# Environment Variables\nPOSTGRES_USER=postgres\nPOSTGRES_PASSWORD=secret\n",
+    "docker-compose.yml": "version: '3.8'\nservices:\n  postgres:\n    image: postgres:15\n    environment:\n      POSTGRES_PASSWORD: secret\n  redis:\n    image: redis:7\n",
+    "Makefile": "# Makefile commands for local development\nup:\n\tdocker-compose up -d\ndown:\n\tdocker-compose down\n"
+}
+
+os.makedirs(base_dir, exist_ok=True)
+
+for folder in folders:
+    os.makedirs(os.path.join(base_dir, folder), exist_ok=True)
+
+for file_path, content in files.items():
+    full_path = os.path.join(base_dir, file_path)
+    with open(full_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+print("Project structure created successfully.")

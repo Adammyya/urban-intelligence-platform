@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: SYNAPSE API
+  description: REST API for the SYNAPSE Smart City Command Center Platform.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local Development Server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UserLoginDTO:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+          
+    AuthResponseDTO:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        
+    SensorDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roadId:
+          type: string
+          format: uuid
+        type:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        status:
+          type: string
+
+    SensorDataDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sensorId:
+          type: string
+          format: uuid
+        vehicleCount:
+          type: integer
+        averageSpeed:
+          type: number
+          format: double
+        timestamp:
+          type: string
+          format: date-time
+
+    IncidentDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roadId:
+          type: string
+          format: uuid
+        type:
+          type: string
+        severity:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+
+    PredictionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roadId:
+          type: string
+          format: uuid
+        predictionType:
+          type: string
+        probability:
+          type: number
+          format: double
+        predictedFor:
+          type: string
+          format: date-time
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate a user
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginDTO'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDTO'
+        '401':
+          description: Unauthorized
+
+  /sensors:
+    get:
+      summary: Get all sensors
+      tags:
+        - Sensors
+      responses:
+        '200':
+          description: A list of sensors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SensorDTO'
+
+  /sensors/{id}/data:
+    get:
+      summary: Get historical data for a specific sensor
+      tags:
+        - Sensors
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Historical sensor data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SensorDataDTO'
+
+  /incidents:
+    get:
+      summary: Get all active incidents
+      tags:
+        - Incidents
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            default: OPEN
+      responses:
+        '200':
+          description: A list of incidents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IncidentDTO'
+    post:
+      summary: Report a new incident
+      tags:
+        - Incidents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentDTO'
+      responses:
+        '201':
+          description: Incident created successfully
+
+  /predictions/road/{roadId}:
+    get:
+      summary: Get AI predictions for a specific road
+      tags:
+        - Predictions
+      parameters:
+        - in: path
+          name: roadId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of predictions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PredictionDTO'
