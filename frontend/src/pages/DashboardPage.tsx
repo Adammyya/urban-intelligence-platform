@@ -1,16 +1,22 @@
 import LiveMapWidget from '../components/map/LiveMapWidget';
 import PredictionConfidenceWidget from '../components/predictions/PredictionConfidenceWidget';
 import LiveIncidentFeed from '../components/incidents/LiveIncidentFeed';
+import TrafficAnalyticsWidget from '../components/analytics/TrafficAnalyticsWidget';
 
 const DashboardPage = () => {
   return (
-    <div className="absolute inset-0 bg-[#050505]">
+    <div className="absolute inset-0 bg-[#050505] overflow-hidden">
       {/* Interactive React Leaflet Map */}
       <LiveMapWidget />
 
       {/* Floating UI Elements */}
-      <div className="absolute inset-0 p-6 pointer-events-none flex flex-col justify-end">
+      <div className="absolute inset-0 p-6 pointer-events-none flex flex-col justify-between z-10">
         
+        {/* Top Row - Analytics (Right Aligned) */}
+        <div className="w-full flex justify-end pointer-events-auto mt-16">
+          <TrafficAnalyticsWidget />
+        </div>
+
         {/* Bottom Row Intelligence Panels */}
         <div className="grid grid-cols-3 gap-6 pointer-events-auto h-64">
           
