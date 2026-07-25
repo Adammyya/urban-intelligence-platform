@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, Clock, MapPin, ShieldAlert, BrainCircuit, Activity, Radio, Cloud, Zap, Eye } from 'lucide-react';
 import { useIncidentStore } from '../../store/useIncidentStore';
-import { useCityEventStore, CityEventType } from '../../store/useCityEventStore';
+import { useCityEventStore } from '../../store/useCityEventStore';
+import type { CityEventType } from '../../store/useCityEventStore';
 
 const eventConfig: Record<CityEventType, { icon: any; color: string; bgClass: string }> = {
   INCIDENT: { icon: ShieldAlert, color: '#ff2a2a', bgClass: 'bg-[#ff2a2a]/10 border-[#ff2a2a]/30' },

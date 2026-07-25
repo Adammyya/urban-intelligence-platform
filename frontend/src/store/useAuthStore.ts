@@ -44,7 +44,8 @@ export const useAuthStore = create<AuthState>()(
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         try {
-          const res = await fetch('http://localhost:8080/api/v1/auth/login', {
+          const API_URL = import.meta.env.VITE_CORE_API_URL || 'http://localhost:8080';
+          const res = await fetch(`${API_URL}/api/v1/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

@@ -33,7 +33,8 @@ export const useIncidentStore = create<IncidentState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       // Fetching from the Core Backend REST API
-      const res = await fetch('http://localhost:8080/api/v1/incidents');
+      const API_URL = import.meta.env.VITE_CORE_API_URL || 'http://localhost:8080';
+      const res = await fetch(`${API_URL}/api/v1/incidents`);
       if (!res.ok) throw new Error('Failed to fetch incidents from Core Backend');
       
       const data = await res.json();
