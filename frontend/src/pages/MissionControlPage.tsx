@@ -74,7 +74,7 @@ const MissionControlPage = () => {
           <div className="col-span-4 pointer-events-none"></div>
 
           {/* System Topology (Right) */}
-          <div className="col-span-4 h-full bg-os-panel/40 border border-os-border rounded-2xl shadow-2xl p-4 relative overflow-hidden backdrop-blur-md pointer-events-auto">
+          <div className="col-span-4 h-full flex flex-col min-h-0 bg-os-panel/40 border border-os-border rounded-2xl shadow-2xl p-4 relative overflow-hidden backdrop-blur-md pointer-events-auto">
             <SystemTopology />
           </div>
 
