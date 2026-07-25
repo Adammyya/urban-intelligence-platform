@@ -28,8 +28,8 @@ const MissionControlPage = () => {
           {/* Spacer to let the 3D Sphere shine through */}
           <div className="col-span-6 pointer-events-none flex items-start justify-center pt-8">
              <div className="px-6 py-2 bg-os-panel/40 backdrop-blur-md border border-white/10 rounded-full flex flex-col items-center">
-                <span className="text-white text-lg font-light tracking-[0.2em] uppercase">Synapse V1.0</span>
-                <span className="text-[10px] text-ai-violet font-mono tracking-widest uppercase">Global Digital Twin Active</span>
+                <span className="text-white text-lg font-light tracking-[0.2em] uppercase">Synapse V1.5</span>
+                <span className="text-[10px] text-ai-violet font-mono tracking-widest uppercase">Digital Twin Active • Live</span>
              </div>
           </div>
 

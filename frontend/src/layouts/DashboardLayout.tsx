@@ -7,6 +7,7 @@ import BootSequence from '../components/common/BootSequence';
 import { useUIStore } from '../store/useUIStore';
 import { useSensorStore } from '../store/useSensorStore';
 import { useIncidentStore } from '../store/useIncidentStore';
+import { startCitySimulation, stopCitySimulation } from '../store/useCityEventStore';
 
 const DashboardLayout = () => {
   const isDarkMode = useUIStore(state => state.isDarkMode);
@@ -16,10 +17,10 @@ const DashboardLayout = () => {
   const [booting, setBooting] = useState(true);
 
   useEffect(() => {
-    // Only connect after boot sequence finishes, or during it if preferred
-    // For now, we connect immediately to speed up data hydration
     initializeUplink();
     fetchIncidents();
+    startCitySimulation(); // Begin generating live city events
+    return () => stopCitySimulation();
   }, [initializeUplink, fetchIncidents]);
 
   return (
