@@ -3,6 +3,7 @@ import LiveIncidentFeed from '../components/incidents/LiveIncidentFeed';
 import AICoreVisualizer from '../components/ai/AICoreVisualizer';
 import CityHealthModule from '../components/dashboard/CityHealthModule';
 import SystemTopology from '../components/dashboard/SystemTopology';
+import AmbientParticles from '../components/common/AmbientParticles';
 import { useCityEventStore } from '../store/useCityEventStore';
 import { useUIStore } from '../store/useUIStore';
 import { useEffect } from 'react';
@@ -27,6 +28,9 @@ const MissionControlPage = () => {
       <div className="absolute inset-0 z-0">
         <DigitalTwinSphere />
       </div>
+
+      {/* Ambient Floating Particles */}
+      <AmbientParticles />
 
       {/* Foreground Holographic Interface Layer (Glassmorphism HUD) */}
       <div className="absolute inset-0 p-6 pointer-events-none flex flex-col z-10 justify-between">
