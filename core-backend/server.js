@@ -37,7 +37,7 @@ app.post('/api/v1/auth/login', (req, res) => {
   }
 });
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`[SYNAPSE CORE BACKEND] REST API running natively on port ${PORT}`);
   console.log(`[SYNAPSE CORE BACKEND] Seeded mock incidents into in-memory store.`);

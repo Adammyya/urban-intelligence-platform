@@ -1,0 +1,27 @@
+services:
+  # 1. Core Backend (Node.js REST API)
+  - type: web
+    name: synapse-core-backend
+    env: node
+    rootDir: core-backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+
+  # 2. City Simulator (Node.js WebSockets Event Broker)
+  - type: web
+    name: synapse-city-simulator
+    env: node
+    rootDir: city-simulator
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+
+  # 3. AI Engine (Python REST API)
+  - type: web
+    name: synapse-ai-engine
+    env: python
+    rootDir: ai-engine
+    buildCommand: echo "No dependencies"
+    startCommand: python ai_engine.py
+    plan: free

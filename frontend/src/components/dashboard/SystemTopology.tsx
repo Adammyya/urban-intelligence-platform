@@ -17,12 +17,12 @@ interface TopoLink {
 }
 
 const nodes: TopoNode[] = [
-  { id: 'frontend', label: 'React OS', icon: Globe, x: 140, y: 30, color: '#00f0ff' },
-  { id: 'api', label: 'REST API', icon: Database, x: 50, y: 100, color: '#10b981' },
-  { id: 'broker', label: 'Event Broker', icon: Network, x: 230, y: 100, color: '#ff9900' },
-  { id: 'ai', label: 'AI Engine', icon: BrainCircuit, x: 50, y: 180, color: '#a020f0' },
-  { id: 'sensors', label: 'Sensors', icon: Radio, x: 230, y: 180, color: '#3b82f6' },
-  { id: 'kafka', label: 'Kafka', icon: Cpu, x: 140, y: 220, color: '#ff2a2a' },
+  { id: 'frontend', label: 'React OS', icon: Globe, x: 160, y: 40, color: '#00f0ff' },
+  { id: 'api', label: 'REST API', icon: Database, x: 60, y: 110, color: '#10b981' },
+  { id: 'broker', label: 'Event Broker', icon: Network, x: 260, y: 110, color: '#ff9900' },
+  { id: 'ai', label: 'AI Engine', icon: BrainCircuit, x: 60, y: 190, color: '#a020f0' },
+  { id: 'sensors', label: 'Sensors', icon: Radio, x: 260, y: 190, color: '#3b82f6' },
+  { id: 'kafka', label: 'Kafka', icon: Cpu, x: 160, y: 240, color: '#ff2a2a' },
 ];
 
 const links: TopoLink[] = [
@@ -67,7 +67,7 @@ const SystemTopology = () => {
       </div>
 
       <div className="flex-1 relative">
-        <svg width="100%" height="100%" viewBox="0 0 280 250" preserveAspectRatio="xMidYMid meet">
+        <svg width="100%" height="100%" viewBox="0 0 320 280" preserveAspectRatio="xMidYMid meet">
           {/* Animated Links */}
           {links.map((link, i) => {
             const from = getNode(link.from);

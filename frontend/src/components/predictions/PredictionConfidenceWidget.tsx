@@ -17,7 +17,8 @@ const PredictionConfidenceWidget = () => {
   useEffect(() => {
     const fetchPrediction = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/v1/predict');
+        const API_URL = import.meta.env.VITE_AI_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${API_URL}/api/v1/predict`);
         if (!res.ok) throw new Error('API Error');
         const data = await res.json();
         

@@ -55,7 +55,7 @@ setInterval(() => {
   io.emit('telemetry_update', sensors);
 }, 2000); // Blast data every 2 seconds
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`[SYNAPSE EVENT BROKER] Running on port ${PORT}`);
   console.log(`[SYNAPSE EVENT BROKER] Broadcasting telemetry at 2000ms intervals...`);

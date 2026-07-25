@@ -4,7 +4,9 @@ import json
 import random
 import time
 
-PORT = 5000
+import os
+
+PORT = int(os.environ.get('PORT', 5000))
 
 class SynapseAIHandler(http.server.SimpleHTTPRequestHandler):
     def do_OPTIONS(self):

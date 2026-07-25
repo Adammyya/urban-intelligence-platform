@@ -38,7 +38,8 @@ export const useSensorStore = create<SensorState>((set, get) => ({
     set({ isLoading: true });
     
     // Connect to the lightweight Node.js Event Broker
-    const newSocket = io('http://localhost:4000');
+    const WS_URL = import.meta.env.VITE_WS_BROKER_URL || 'http://localhost:4000';
+    const newSocket = io(WS_URL);
 
     newSocket.on('connect', () => {
       console.log('[SYNAPSE UI] Uplink established to Event Broker.');
