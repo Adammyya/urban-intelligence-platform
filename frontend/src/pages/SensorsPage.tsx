@@ -128,9 +128,12 @@ const SensorsPage = () => {
 
                   <div className="flex items-center gap-4">
                     <div className="h-1.5 w-16 bg-os-graphite rounded-full overflow-hidden">
-                      <div className="h-full bg-infra-emerald" style={{ width: '85%' }}></div>
+                      <div 
+                        className={`h-full ${sensor.battery > 20 ? 'bg-infra-emerald' : 'bg-alert-crimson'}`} 
+                        style={{ width: `${sensor.battery}%` }}
+                      ></div>
                     </div>
-                    <span className="text-xs text-gray-500 font-mono">85%</span>
+                    <span className="text-xs text-gray-500 font-mono">{Math.floor(sensor.battery)}%</span>
                   </div>
                 </motion.div>
               ))}

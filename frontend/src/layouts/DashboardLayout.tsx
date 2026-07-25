@@ -1,11 +1,19 @@
 import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
 import Sidebar from '../components/common/Sidebar';
 import TopBar from '../components/common/TopBar';
 import CommandPalette from '../components/common/CommandPalette';
 import { useUIStore } from '../store/useUIStore';
+import { useSensorStore } from '../store/useSensorStore';
 
 const DashboardLayout = () => {
   const isDarkMode = useUIStore(state => state.isDarkMode);
+  const initializeUplink = useSensorStore(state => state.initializeUplink);
+
+  useEffect(() => {
+    // Connect to the Event Broker when the OS shell boots
+    initializeUplink();
+  }, [initializeUplink]);
 
   return (
     <div className={`flex h-screen w-screen overflow-hidden ${isDarkMode ? 'dark bg-os-graphite text-white' : 'bg-gray-50 text-gray-900'} font-sans`}>
