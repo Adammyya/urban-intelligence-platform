@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Settings, Shield, Bell, Map, Database, Key, Monitor, User } from 'lucide-react';
+import { Settings, Shield, Bell, Map as MapIcon, Database, Key, Monitor, User } from 'lucide-react';
 import { useState } from 'react';
 
 const SettingsPage = () => {
@@ -8,7 +8,7 @@ const SettingsPage = () => {
   const tabs = [
     { id: 'general', label: 'General OS', icon: Monitor },
     { id: 'security', label: 'Security & Auth', icon: Shield },
-    { id: 'map', label: 'Map Engine', icon: Map },
+    { id: 'map', label: 'Map Engine', icon: MapIcon },
     { id: 'notifications', label: 'Alert Routing', icon: Bell },
     { id: 'data', label: 'Data Pipeline', icon: Database },
     { id: 'api', label: 'API Keys', icon: Key },
@@ -108,10 +108,10 @@ const SettingsPage = () => {
                         <div className="text-white text-sm">Predictive Analysis Strictness</div>
                         <div className="text-xs text-gray-500 font-mono mt-1">CONFIDENCE THRESHOLD</div>
                       </div>
-                      <select className="bg-os-panel border border-os-border rounded-lg text-white text-sm p-2 outline-none">
-                        <option>Aggressive (75%+)</option>
-                        <option selected>Balanced (85%+)</option>
-                        <option>Conservative (95%+)</option>
+                      <select defaultValue="Balanced" className="bg-os-panel border border-os-border rounded-lg text-white text-sm p-2 outline-none focus:border-ai-violet/50">
+                        <option value="Aggressive">Aggressive (75%+)</option>
+                        <option value="Balanced">Balanced (85%+)</option>
+                        <option value="Conservative">Conservative (95%+)</option>
                       </select>
                     </div>
                   </div>
@@ -119,10 +119,151 @@ const SettingsPage = () => {
               </div>
             )}
 
-            {activeTab !== 'general' && (
-              <div className="flex flex-col items-center justify-center py-20 text-gray-500 font-mono">
-                <Monitor className="w-16 h-16 mb-4 opacity-20" />
-                MODULE CONSTRUCTING...
+            {activeTab === 'security' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl text-white mb-2">Security & Authentication</h2>
+                  <p className="text-sm text-gray-500 mb-6">Manage access controls and session policies.</p>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Require Multi-Factor Authentication</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">ENFORCE MFA FOR ALL ADMINS</div>
+                      </div>
+                      <div className="w-12 h-6 bg-traffic-cyan/20 rounded-full border border-traffic-cyan flex items-center p-1 cursor-pointer">
+                        <div className="w-4 h-4 bg-traffic-cyan rounded-full translate-x-6 shadow-[0_0_10px_currentColor]"></div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Session Timeout</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">AUTO-LOGOUT AFTER INACTIVITY</div>
+                      </div>
+                      <select defaultValue="30m" className="bg-os-panel border border-os-border rounded-lg text-white text-sm p-2 outline-none focus:border-ai-violet/50">
+                        <option value="15m">15 Minutes</option>
+                        <option value="30m">30 Minutes</option>
+                        <option value="1h">1 Hour</option>
+                        <option value="never">Never (Not Recommended)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'map' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl text-white mb-2">Map Engine Settings</h2>
+                  <p className="text-sm text-gray-500 mb-6">Customize the Digital Twin geospatial layer.</p>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Default Map Style</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">TILESET PROVIDER</div>
+                      </div>
+                      <select defaultValue="dark-matter" className="bg-os-panel border border-os-border rounded-lg text-white text-sm p-2 outline-none focus:border-ai-violet/50">
+                        <option value="dark-matter">Dark Matter (CARTO)</option>
+                        <option value="satellite">Satellite (High Res)</option>
+                        <option value="wireframe">Wireframe Matrix</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Radar Sweep Overlay</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">HOLOGRAPHIC SCAN EFFECT</div>
+                      </div>
+                      <div className="w-12 h-6 bg-traffic-cyan/20 rounded-full border border-traffic-cyan flex items-center p-1 cursor-pointer">
+                        <div className="w-4 h-4 bg-traffic-cyan rounded-full translate-x-6 shadow-[0_0_10px_currentColor]"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'notifications' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl text-white mb-2">Alert Routing</h2>
+                  <p className="text-sm text-gray-500 mb-6">Manage how and when SYNAPSE sends notifications.</p>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Critical Incident Sounds</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">AUDIO ALARM ON RED ALERTS</div>
+                      </div>
+                      <div className="w-12 h-6 bg-os-graphite rounded-full border border-os-border flex items-center p-1 cursor-pointer">
+                        <div className="w-4 h-4 bg-gray-500 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Email Digest</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">DAILY SYSTEM HEALTH REPORT</div>
+                      </div>
+                      <div className="w-12 h-6 bg-traffic-cyan/20 rounded-full border border-traffic-cyan flex items-center p-1 cursor-pointer">
+                        <div className="w-4 h-4 bg-traffic-cyan rounded-full translate-x-6 shadow-[0_0_10px_currentColor]"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'data' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl text-white mb-2">Data Pipeline</h2>
+                  <p className="text-sm text-gray-500 mb-6">Manage Kafka streams and database ingestion rates.</p>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div>
+                        <div className="text-white text-sm">Telemetry Sync Rate</div>
+                        <div className="text-xs text-gray-500 font-mono mt-1">WEBSOCKET POLLING INTERVAL</div>
+                      </div>
+                      <select defaultValue="100ms" className="bg-os-panel border border-os-border rounded-lg text-white text-sm p-2 outline-none focus:border-ai-violet/50">
+                        <option value="10ms">Real-time (10ms)</option>
+                        <option value="100ms">Fast (100ms)</option>
+                        <option value="1000ms">Standard (1s)</option>
+                      </select>
+                    </div>
+                    <div className="p-4 bg-ai-violet/10 border border-ai-violet/30 rounded-xl">
+                      <div className="text-ai-violet font-mono text-sm mb-2">KAFKA CONNECTION: STABLE</div>
+                      <div className="text-xs text-gray-400 font-sans">Currently connected to primary cluster (US-EAST-1).</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'api' && (
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl text-white mb-2">API Keys</h2>
+                  <p className="text-sm text-gray-500 mb-6">Manage external integrations and service tokens.</p>
+                  
+                  <div className="space-y-4">
+                    <div className="p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div className="text-white text-sm mb-2">Google Maps Platform</div>
+                      <div className="flex items-center gap-2">
+                        <input type="password" value="************************" readOnly className="flex-1 bg-os-panel border border-os-border rounded-lg px-3 py-2 text-sm text-gray-400 font-mono" />
+                        <button className="px-4 py-2 bg-os-panel border border-os-border text-gray-400 rounded-lg hover:text-white transition-colors text-sm font-mono">REGENERATE</button>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-os-graphite rounded-xl border border-os-border">
+                      <div className="text-white text-sm mb-2">OpenAI / Claude Inference Endpoint</div>
+                      <div className="flex items-center gap-2">
+                        <input type="password" value="sk-************************" readOnly className="flex-1 bg-os-panel border border-os-border rounded-lg px-3 py-2 text-sm text-gray-400 font-mono" />
+                        <button className="px-4 py-2 bg-os-panel border border-os-border text-gray-400 rounded-lg hover:text-white transition-colors text-sm font-mono">REGENERATE</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </motion.div>

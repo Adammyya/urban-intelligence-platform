@@ -6,6 +6,12 @@ import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SensorsPage from './pages/SensorsPage';
 import SettingsPage from './pages/SettingsPage';
+import MapPage from './pages/MapPage';
+import TrafficPage from './pages/TrafficPage';
+import IncidentsPage from './pages/IncidentsPage';
+import PredictionsPage from './pages/PredictionsPage';
+import AnalyticsPage from './pages/AnalyticsPage';
+import ReportsPage from './pages/ReportsPage';
 
 function App() {
   return (
@@ -19,13 +25,13 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
-              <Route path="map" element={<div className="p-6 text-white font-mono">Live Map Module Initializing...</div>} />
-              <Route path="traffic" element={<div className="p-6 text-white font-mono">Traffic Module Initializing...</div>} />
+              <Route path="map" element={<MapPage />} />
+              <Route path="traffic" element={<TrafficPage />} />
               <Route path="sensors" element={<SensorsPage />} />
-              <Route path="predictions" element={<div className="p-6 text-white font-mono">Predictions Module Initializing...</div>} />
-              <Route path="analytics" element={<div className="p-6 text-white font-mono">Analytics Module Initializing...</div>} />
-              <Route path="incidents" element={<div className="p-6 text-white font-mono">Incidents Module Initializing...</div>} />
-              <Route path="reports" element={<div className="p-6 text-white font-mono">Reports Module Initializing...</div>} />
+              <Route path="predictions" element={<PredictionsPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="incidents" element={<IncidentsPage />} />
+              <Route path="reports" element={<ReportsPage />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
           </Route>
