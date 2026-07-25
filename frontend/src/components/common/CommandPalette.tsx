@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Map, Activity, Radio, LayoutDashboard, BrainCircuit, AlertTriangle, FileText, Settings, X } from 'lucide-react';
+import { Search, Map, Activity, Radio, LayoutDashboard, BrainCircuit, AlertTriangle, FileText, Settings, X, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const commands = [
-  { id: 'dashboard', name: 'Open Dashboard', icon: LayoutDashboard, path: '/' },
+  { id: 'dashboard', name: 'Open Mission Control', icon: Globe, path: '/mission-control' },
   { id: 'map', name: 'View Live Map', icon: Map, path: '/map' },
   { id: 'traffic', name: 'Analyze Traffic Flow', icon: Activity, path: '/traffic' },
   { id: 'sensors', name: 'Manage IoT Sensors', icon: Radio, path: '/sensors' },

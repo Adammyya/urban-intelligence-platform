@@ -43,21 +43,29 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (email, password) => {
         set({ isLoading: true, error: null });
-        
-        // Simulate network latency for a realistic loading state
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        if (email === 'admin@synapse.os' && password === 'admin') {
-          set({
-            isAuthenticated: true,
-            user: mockUser,
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock_token.signature',
-            isLoading: false,
+        try {
+          const res = await fetch('http://localhost:8080/api/v1/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
           });
-        } else {
-          set({
-            error: 'Invalid credentials. Access denied.',
+          
+          const data = await res.json();
+          
+          if (!res.ok) {
+            throw new Error(data.message || 'Authentication failed');
+          }
+
+          set({ 
+            isAuthenticated: true, 
+            user: data.user, 
             isLoading: false,
+            token: data.token
+          });
+        } catch (err: any) {
+          set({ 
+            error: err.message,
+            isLoading: false 
           });
         }
       },

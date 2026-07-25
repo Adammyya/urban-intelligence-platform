@@ -2,6 +2,8 @@ import { Menu, Bell, Search, Cloud, Activity, BrainCircuit } from 'lucide-react'
 import { useUIStore } from '../../store/useUIStore';
 import { useAuthStore } from '../../store/useAuthStore';
 
+import NotificationCenter from './NotificationCenter';
+
 const TopBar = () => {
   const toggleSidebar = useUIStore(state => state.toggleSidebar);
   const user = useAuthStore(state => state.user);
@@ -78,10 +80,7 @@ const TopBar = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <button className="p-2 relative rounded-lg text-gray-400 hover:text-white hover:bg-os-border transition-colors">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-alert-crimson shadow-[0_0_8px_rgba(255,42,42,0.8)]"></span>
-          </button>
+          <NotificationCenter />
           
           <button 
             className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-os-border transition-colors"

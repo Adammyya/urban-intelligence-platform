@@ -76,7 +76,7 @@ const LoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-[#111111] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-traffic-cyan/50 focus:ring-1 focus:ring-traffic-cyan/50 transition-all placeholder:text-gray-600"
-                  placeholder="operator@synapse.os"
+                  placeholder="admin@synapse.gov"
                   required
                 />
               </div>

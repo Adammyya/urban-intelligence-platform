@@ -1,0 +1,76 @@
+name: SYNAPSE V1.0 Enterprise CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+        
+    - name: Install Dependencies
+      working-directory: ./frontend
+      run: npm ci || npm install
+      
+    - name: Build React OS
+      working-directory: ./frontend
+      run: npm run build
+      
+  build-core-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        cache-dependency-path: core-backend/package-lock.json
+        
+    - name: Install Dependencies
+      working-directory: ./core-backend
+      run: npm ci || npm install
+      
+  build-event-broker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        cache-dependency-path: city-simulator/package-lock.json
+        
+    - name: Install Dependencies
+      working-directory: ./city-simulator
+      run: npm ci || npm install
+      
+  test-ai-engine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        
+    - name: Test AI Inference Module
+      working-directory: ./ai-engine
+      run: |
+        python -m py_compile ai_engine.py
+        echo "Python AST compilation successful."

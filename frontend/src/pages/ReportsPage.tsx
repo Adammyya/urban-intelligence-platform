@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Globe, RefreshCw, ExternalLink, AlertTriangle, Search } from 'lucide-react';
+import { Globe, RefreshCw, ExternalLink, AlertTriangle, Search, Download } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface NewsItem {
@@ -61,6 +61,33 @@ const ReportsPage = () => {
     });
   };
 
+  const downloadCSV = () => {
+    if (news.length === 0) return;
+    
+    // Create CSV content
+    const headers = ['Title', 'Date', 'Source Link', 'Description'];
+    const csvRows = [headers.join(',')];
+    
+    news.forEach(article => {
+      const title = `"${article.title.replace(/"/g, '""')}"`;
+      const date = `"${formatDate(article.pubDate)}"`;
+      const link = `"${article.link}"`;
+      const description = `"${(article.description || '').replace(/<[^>]+>/g, '').replace(/"/g, '""')}"`;
+      csvRows.push([title, date, link, description].join(','));
+    });
+    
+    const csvContent = csvRows.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `SYNAPSE_INTEL_REPORT_${new Date().getTime()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="h-full w-full p-8 flex flex-col gap-6 overflow-hidden">
       
@@ -76,14 +103,25 @@ const ReportsPage = () => {
           </div>
         </div>
         
-        <button 
-          onClick={fetchNews}
-          disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-os-panel border border-os-border rounded-lg text-sm text-gray-300 hover:text-white transition-colors font-mono disabled:opacity-50"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-ai-violet' : ''}`} />
-          {loading ? 'SYNCING...' : 'SYNC FEED'}
-        </button>
+        <div className="flex gap-3">
+          <button 
+            onClick={downloadCSV}
+            disabled={loading || news.length === 0}
+            className="flex items-center gap-2 px-4 py-3 bg-os-panel border border-os-border rounded-lg text-sm text-gray-300 hover:text-white hover:border-gray-500 transition-colors font-mono disabled:opacity-50"
+          >
+            <Download className="w-4 h-4" />
+            EXPORT CSV
+          </button>
+          
+          <button 
+            onClick={fetchNews}
+            disabled={loading}
+            className="flex items-center gap-2 px-6 py-3 bg-ai-violet/20 border border-ai-violet/50 rounded-lg text-sm text-ai-violet hover:text-white hover:bg-ai-violet transition-colors font-mono disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            {loading ? 'SYNCING...' : 'SYNC FEED'}
+          </button>
+        </div>
       </div>
 
       {/* Content */}
