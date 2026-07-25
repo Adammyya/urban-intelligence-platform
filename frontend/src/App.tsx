@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import DashboardLayout from './layouts/DashboardLayout';
-import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SensorsPage from './pages/SensorsPage';
 import SettingsPage from './pages/SettingsPage';
-import MapPage from './pages/MapPage';
+import MissionControlPage from './pages/MissionControlPage';
 import TrafficPage from './pages/TrafficPage';
 import IncidentsPage from './pages/IncidentsPage';
 import PredictionsPage from './pages/PredictionsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ReportsPage from './pages/ReportsPage';
+import MapPage from './pages/MapPage';
 
 function App() {
   return (
@@ -24,7 +24,8 @@ function App() {
           {/* Protected OS Routes */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardLayout />}>
-              <Route index element={<DashboardPage />} />
+              <Route index element={<Navigate to="/mission-control" replace />} />
+              <Route path="mission-control" element={<MissionControlPage />} />
               <Route path="map" element={<MapPage />} />
               <Route path="traffic" element={<TrafficPage />} />
               <Route path="sensors" element={<SensorsPage />} />

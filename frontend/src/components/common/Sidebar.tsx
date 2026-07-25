@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, Map, Activity, Radio, 
   BrainCircuit, BarChart3, AlertTriangle, 
-  FileText, Settings, Brain 
+  FileText, Settings, Brain, Globe 
 } from 'lucide-react';
 import { useUIStore } from '../../store/useUIStore';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Mission Control', href: '/mission-control', icon: Globe },
   { name: 'Live Map', href: '/map', icon: Map },
   { name: 'Traffic', href: '/traffic', icon: Activity },
   { name: 'Sensors', href: '/sensors', icon: Radio },

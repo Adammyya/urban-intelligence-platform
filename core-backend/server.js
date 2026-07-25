@@ -16,6 +16,27 @@ app.get('/api/v1/incidents', (req, res) => {
   res.json(incidents);
 });
 
+// Mock JWT Login Endpoint
+app.post('/api/v1/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  if (email === 'admin@synapse.gov' && password === 'admin') {
+    // Return a mock JWT token
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock_payload.mock_signature';
+    res.json({
+      token,
+      user: {
+        id: 'U-001',
+        name: 'Chief Operator',
+        email: 'admin@synapse.gov',
+        role: 'ADMIN'
+      }
+    });
+  } else {
+    res.status(401).json({ message: 'Invalid credentials' });
+  }
+});
+
 const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`[SYNAPSE CORE BACKEND] REST API running natively on port ${PORT}`);
