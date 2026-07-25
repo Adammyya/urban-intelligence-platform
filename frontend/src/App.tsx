@@ -4,6 +4,8 @@ import DashboardLayout from './layouts/DashboardLayout';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import SensorsPage from './pages/SensorsPage';
+import SettingsPage from './pages/SettingsPage';
 
 function App() {
   return (
@@ -19,12 +21,12 @@ function App() {
               <Route index element={<DashboardPage />} />
               <Route path="map" element={<div className="p-6 text-white font-mono">Live Map Module Initializing...</div>} />
               <Route path="traffic" element={<div className="p-6 text-white font-mono">Traffic Module Initializing...</div>} />
-              <Route path="sensors" element={<div className="p-6 text-white font-mono">Sensors Module Initializing...</div>} />
+              <Route path="sensors" element={<SensorsPage />} />
               <Route path="predictions" element={<div className="p-6 text-white font-mono">Predictions Module Initializing...</div>} />
               <Route path="analytics" element={<div className="p-6 text-white font-mono">Analytics Module Initializing...</div>} />
               <Route path="incidents" element={<div className="p-6 text-white font-mono">Incidents Module Initializing...</div>} />
               <Route path="reports" element={<div className="p-6 text-white font-mono">Reports Module Initializing...</div>} />
-              <Route path="settings" element={<div className="p-6 text-white font-mono">Settings Module Initializing...</div>} />
+              <Route path="settings" element={<SettingsPage />} />
             </Route>
           </Route>
 
