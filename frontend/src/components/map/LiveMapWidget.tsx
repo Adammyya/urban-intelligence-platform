@@ -1,8 +1,9 @@
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useSensorStore } from '../../store/useSensorStore';
 import { useIncidentStore } from '../../store/useIncidentStore';
+import { useEffect, useState } from 'react';
 
 // Fix Leaflet's default icon path issues in React
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -22,6 +23,16 @@ const createPulsingIcon = (colorClass: string) => L.divIcon({
 
 const sensorIcon = createPulsingIcon('bg-cyber-blue text-cyber-blue');
 const incidentIcon = createPulsingIcon('bg-alert-red text-alert-red');
+const userIcon = createPulsingIcon('bg-success-green text-success-green ring-2 ring-white');
+
+// Component to programmatically update map center
+const MapUpdater = ({ center }: { center: [number, number] }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+  return null;
+};
 
 const LiveMapWidget = () => {
   const sensors = useSensorStore(state => state.sensors);
@@ -29,19 +40,52 @@ const LiveMapWidget = () => {
   const setSelectedSensor = useSensorStore(state => state.setSelectedSensor);
   const setActiveIncident = useIncidentStore(state => state.setActiveIncident);
 
+  const [mapCenter, setMapCenter] = useState<[number, number]>([40.7128, -74.0060]); // Default NYC
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const loc: [number, number] = [position.coords.latitude, position.coords.longitude];
+          setMapCenter(loc);
+          setUserLocation(loc);
+        },
+        (error) => {
+          console.warn('Geolocation error:', error.message);
+        },
+        { enableHighAccuracy: true }
+      );
+    }
+  }, []);
+
   return (
     <div className="absolute inset-0 z-0">
       <MapContainer 
-        center={[40.7128, -74.0060]} // NYC
+        center={mapCenter} 
         zoom={14} 
         zoomControl={false}
         className="w-full h-full bg-background-dark"
       >
+        <MapUpdater center={mapCenter} />
+
         {/* Dark theme tile layer - CartoDB Dark Matter */}
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
+
+        {/* Render User Location Marker */}
+        {userLocation && (
+          <Marker position={userLocation} icon={userIcon}>
+            <Popup className="custom-popup">
+              <div className="bg-panel-glass p-2 text-white border border-success-green/30 rounded">
+                <strong className="text-success-green block mb-1">Your Location</strong>
+                Live GPS Feed Active
+              </div>
+            </Popup>
+          </Marker>
+        )}
 
         {/* Render sensors from Zustand global store */}
         {sensors.map(sensor => (
