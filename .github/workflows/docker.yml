@@ -1,1 +1,16 @@
-# Docker Build pipeline
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Images
+        run: docker compose build
