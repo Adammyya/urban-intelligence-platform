@@ -2,8 +2,24 @@ import DigitalTwinSphere from '../components/3d/DigitalTwinSphere';
 import LiveIncidentFeed from '../components/incidents/LiveIncidentFeed';
 import AICoreVisualizer from '../components/ai/AICoreVisualizer';
 import CityHealthModule from '../components/dashboard/CityHealthModule';
+import SystemTopology from '../components/dashboard/SystemTopology';
+import { useCityEventStore } from '../store/useCityEventStore';
+import { useUIStore } from '../store/useUIStore';
+import { useEffect } from 'react';
 
 const MissionControlPage = () => {
+  const aiStateOverride = useCityEventStore(state => state.aiStateOverride);
+  const setAIState = useUIStore(state => state.setAIState);
+
+  // Connected reactivity: Event Bus drives AI Core state
+  useEffect(() => {
+    if (aiStateOverride) {
+      setAIState(aiStateOverride as any);
+    } else {
+      setAIState('MONITORING');
+    }
+  }, [aiStateOverride, setAIState]);
+
   return (
     <div className="absolute inset-0 bg-os-graphite overflow-hidden font-sans flex items-center justify-center">
       
@@ -53,14 +69,9 @@ const MissionControlPage = () => {
           {/* Center Space for 3D Interaction */}
           <div className="col-span-4 pointer-events-none"></div>
 
-          {/* Analytics / Custom Module (Right) */}
-          <div className="col-span-4 h-full bg-os-panel/40 border border-os-border rounded-2xl shadow-2xl p-6 relative overflow-hidden backdrop-blur-md pointer-events-auto">
-            <h2 className="text-xl font-medium text-white tracking-wide mb-1">System Topology</h2>
-            <p className="text-xs text-gray-500 font-mono mb-4">NODE CONNECTIONS</p>
-            <div className="flex-1 w-full h-full flex flex-col items-center justify-center text-gray-600 font-mono text-sm border border-dashed border-white/10 rounded-lg bg-black/20 p-4 text-center">
-              <span>[ TOPOLOGY MAP ACTIVE ]</span>
-              <span className="text-[10px] mt-2 text-traffic-cyan">Routing 14,024 packets/sec</span>
-            </div>
+          {/* System Topology (Right) */}
+          <div className="col-span-4 h-full bg-os-panel/40 border border-os-border rounded-2xl shadow-2xl p-4 relative overflow-hidden backdrop-blur-md pointer-events-auto">
+            <SystemTopology />
           </div>
 
         </div>
