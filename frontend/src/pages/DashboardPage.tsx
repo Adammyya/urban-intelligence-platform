@@ -1,61 +1,74 @@
 import LiveMapWidget from '../components/map/LiveMapWidget';
-import PredictionConfidenceWidget from '../components/predictions/PredictionConfidenceWidget';
 import LiveIncidentFeed from '../components/incidents/LiveIncidentFeed';
-import TrafficAnalyticsWidget from '../components/analytics/TrafficAnalyticsWidget';
+import AICoreVisualizer from '../components/ai/AICoreVisualizer';
+import CityHealthModule from '../components/dashboard/CityHealthModule';
 
 const DashboardPage = () => {
   return (
-    <div className="absolute inset-0 bg-[#050505] overflow-hidden">
-      {/* Interactive React Leaflet Map */}
-      <LiveMapWidget />
+    <div className="absolute inset-0 bg-os-graphite overflow-hidden font-sans">
+      
+      {/* Background Interactive Map */}
+      <div className="absolute inset-0 opacity-80 mix-blend-screen pointer-events-auto">
+        <LiveMapWidget />
+      </div>
 
-      {/* Floating UI Elements */}
-      <div className="absolute inset-0 p-6 pointer-events-none flex flex-col justify-between z-10">
+      {/* Foreground Holographic Interface Layer */}
+      <div className="absolute inset-0 p-6 pointer-events-none flex flex-col z-10">
         
-        {/* Top Row - Analytics (Right Aligned) */}
-        <div className="w-full flex justify-end pointer-events-auto mt-16">
-          <TrafficAnalyticsWidget />
-        </div>
-
-        {/* Bottom Row Intelligence Panels */}
-        <div className="grid grid-cols-3 gap-6 pointer-events-auto h-64">
+        {/* Top Section: AI Core & Health */}
+        <div className="grid grid-cols-12 gap-6 h-[45%] mb-6">
           
-          {/* Panel 1: Prediction */}
-          <div className="relative group hover:border-cyber-blue/50 transition-colors h-full">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-blue to-neon-purple opacity-50 z-10 rounded-t-xl"></div>
-            <PredictionConfidenceWidget />
+          {/* AI Core (Left) */}
+          <div className="col-span-3 pointer-events-auto relative group">
+             <div className="absolute inset-0 bg-os-panel border border-os-border rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl">
+               <AICoreVisualizer />
+             </div>
           </div>
 
-          {/* Panel 2: Alerts */}
-          <div className="relative group hover:border-alert-red/50 transition-colors h-full">
-            <div className="absolute top-0 left-0 w-full h-1 bg-alert-red opacity-50 z-10 rounded-t-xl"></div>
+          {/* Spacer for Map Visibility */}
+          <div className="col-span-4 pointer-events-none"></div>
+
+          {/* City Health (Right) */}
+          <div className="col-span-5 pointer-events-auto">
+            <CityHealthModule />
+          </div>
+
+        </div>
+
+        {/* Bottom Section: Incidents & Analytics */}
+        <div className="grid grid-cols-12 gap-6 h-[45%] pointer-events-auto">
+          
+          {/* Incident Timeline (Left) */}
+          <div className="col-span-4 h-full">
             <LiveIncidentFeed />
           </div>
 
-          {/* Panel 3: System Health */}
-          <div className="glass-panel p-5 relative overflow-hidden group hover:border-success-green/50 transition-colors">
-            <div className="absolute top-0 left-0 w-full h-1 bg-success-green opacity-50"></div>
-            <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">
-              Platform Health
-            </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center text-sm font-mono">
-                <span className="text-gray-300">API Gateway</span>
-                <span className="text-success-green">99.9% UP</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-mono">
-                <span className="text-gray-300">Kafka Stream</span>
-                <span className="text-success-green">14k msg/s</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-mono">
-                <span className="text-gray-300">Sensors Active</span>
-                <span className="text-cyber-blue">1,042 / 1,050</span>
+          {/* Map Focus Area (Center) */}
+          <div className="col-span-4 pointer-events-none h-full relative">
+            {/* Minimal HUD overlay for map focus */}
+            <div className="absolute inset-0 border border-white/5 rounded-2xl flex items-center justify-center">
+              <div className="w-12 h-12 border-2 border-traffic-cyan/20 rounded-full flex items-center justify-center animate-pulse">
+                <div className="w-2 h-2 bg-traffic-cyan rounded-full"></div>
               </div>
             </div>
           </div>
 
+          {/* Analytics / Custom Module (Right) */}
+          <div className="col-span-4 h-full bg-os-panel border border-os-border rounded-2xl shadow-2xl p-6 relative overflow-hidden backdrop-blur-xl">
+            <h2 className="text-xl font-medium text-white tracking-wide mb-1">System Topology</h2>
+            <p className="text-xs text-gray-500 font-mono mb-4">NODE CONNECTIONS</p>
+            <div className="flex-1 w-full h-full flex items-center justify-center text-gray-600 font-mono text-sm border border-dashed border-white/5 rounded-lg">
+              [ TOPOLOGY MAP OFFLINE ]
+            </div>
+          </div>
+
         </div>
+        
       </div>
+
+      {/* Ambient Vignette overlay for depth */}
+      <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(5,5,5,1)] z-20"></div>
+
     </div>
   );
 };
