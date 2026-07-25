@@ -87,7 +87,7 @@ const ReportsPage = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 bg-os-panel border border-os-border rounded-2xl shadow-2xl overflow-hidden flex">
+      <div className="flex-1 min-h-0 bg-os-panel border border-os-border rounded-2xl shadow-2xl overflow-hidden flex">
         
         {/* Left: Article List */}
         <div className="w-1/3 border-r border-os-border bg-os-graphite/30 p-4 flex flex-col gap-4 relative">
@@ -97,7 +97,7 @@ const ReportsPage = () => {
              <input 
                type="text" 
                placeholder="Filter Intel..." 
-               className="w-full bg-os-panel border border-os-border rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-ai-violet/50 transition-colors font-mono"
+               className="w-full bg-transparent border border-os-border rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-ai-violet/50 transition-colors font-mono"
              />
           </div>
 
