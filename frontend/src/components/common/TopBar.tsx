@@ -1,62 +1,93 @@
-import { Search, Bell, User, CloudRain, Menu } from 'lucide-react';
+import { Menu, Bell, Search, Cloud, Activity, BrainCircuit } from 'lucide-react';
 import { useUIStore } from '../../store/useUIStore';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const TopBar = () => {
   const toggleSidebar = useUIStore(state => state.toggleSidebar);
+  const user = useAuthStore(state => state.user);
+  
+  // Real-time clock simulation
+  const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
 
   return (
-    <header className="h-16 bg-background-dark/80 backdrop-blur-md border-b border-gray-800/50 flex items-center justify-between px-6 z-10 sticky top-0">
+    <header className="h-16 bg-os-graphite border-b border-os-border flex items-center justify-between px-4 z-30 shrink-0">
       
-      <div className="flex items-center gap-4">
-        {/* Sidebar Toggle */}
+      {/* Left: Sidebar Toggle & City Context */}
+      <div className="flex items-center gap-6">
         <button 
           onClick={toggleSidebar}
-          className="p-2 -ml-2 text-gray-400 hover:text-cyber-blue transition-colors rounded-lg hover:bg-white/5"
+          className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-os-border transition-colors focus:outline-none"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        {/* Search Bar */}
-        <div className="relative w-96">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-500" />
+        <div className="hidden md:flex items-center gap-4 border-l border-os-border pl-6 h-8">
+          <div className="flex items-center gap-2 text-sm font-mono text-gray-300">
+            <span className="w-2 h-2 rounded-full bg-traffic-cyan shadow-[0_0_8px_rgba(0,240,255,0.8)]"></span>
+            SECTOR: <span className="text-white font-medium">METRO-PRIME</span>
           </div>
-          <input
-            type="text"
-            className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg bg-black/30 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-colors sm:text-sm"
-            placeholder="Search locations, sensors, incidents..."
-          />
+          <div className="flex items-center gap-2 text-sm font-mono text-gray-400 ml-4">
+            <Cloud className="w-4 h-4 text-gray-500" />
+            <span>72°F / CLR</span>
+          </div>
         </div>
       </div>
 
-      {/* Right Side Info */}
+      {/* Middle: Command Palette Trigger */}
+      <div className="flex-1 max-w-xl px-8 hidden lg:block">
+        <button 
+          className="w-full bg-os-panel border border-os-border hover:border-gray-700 text-gray-500 rounded-lg py-2 px-4 flex items-center justify-between transition-all group"
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+        >
+          <div className="flex items-center gap-2">
+            <Search className="w-4 h-4 group-hover:text-traffic-cyan transition-colors" />
+            <span className="text-sm font-sans tracking-wide">Search coordinates, sensors, or commands...</span>
+          </div>
+          <div className="flex gap-1">
+            <kbd className="px-2 py-0.5 rounded bg-os-graphite border border-os-border text-xs font-mono">CTRL</kbd>
+            <kbd className="px-2 py-0.5 rounded bg-os-graphite border border-os-border text-xs font-mono">K</kbd>
+          </div>
+        </button>
+      </div>
+
+      {/* Right: System Status & User */}
       <div className="flex items-center gap-6">
         
-        {/* Weather Widget Placeholder */}
-        <div className="flex items-center gap-2 text-sm text-gray-300 font-mono">
-          <CloudRain className="w-5 h-5 text-cyber-blue" />
-          <span>72°F | Light Rain</span>
+        {/* System Vitals */}
+        <div className="hidden xl:flex items-center gap-6 border-r border-os-border pr-6">
+          <div className="flex items-center gap-2 text-xs font-mono text-gray-400">
+            <Activity className="w-4 h-4 text-infra-emerald" />
+            <div className="flex flex-col">
+              <span className="uppercase text-[10px] text-gray-600">Latency</span>
+              <span className="text-infra-emerald">12ms</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-mono text-gray-400">
+            <BrainCircuit className="w-4 h-4 text-ai-violet" />
+            <div className="flex flex-col">
+              <span className="uppercase text-[10px] text-gray-600">AI Core</span>
+              <span className="text-ai-violet animate-pulse">MONITORING</span>
+            </div>
+          </div>
         </div>
 
-        {/* Time Widget */}
-        <div className="text-sm font-mono text-neon-purple font-medium">
-          {new Date().toLocaleTimeString('en-US', { hour12: false })}
+        {/* Clock */}
+        <div className="hidden md:block font-mono text-sm tracking-wider text-gray-300">
+          {time}
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-4 border-l border-gray-700 pl-6">
-          <button className="text-gray-400 hover:text-cyber-blue transition-colors relative">
+        <div className="flex items-center gap-3">
+          <button className="p-2 relative rounded-lg text-gray-400 hover:text-white hover:bg-os-border transition-colors">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-alert-red ring-2 ring-background-dark"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-alert-crimson shadow-[0_0_8px_rgba(255,42,42,0.8)]"></span>
           </button>
           
-          <button className="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyber-blue to-neon-purple p-[1px]">
-              <div className="w-full h-full rounded-full bg-background-dark flex items-center justify-center">
-                <User className="w-4 h-4" />
-              </div>
-            </div>
-            <span>Operator</span>
+          <button 
+            className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-os-border transition-colors"
+            onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+          >
+            <Search className="w-5 h-5" />
           </button>
         </div>
       </div>

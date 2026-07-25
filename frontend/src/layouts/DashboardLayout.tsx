@@ -1,21 +1,24 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import TopBar from '../components/common/TopBar';
+import CommandPalette from '../components/common/CommandPalette';
 import { useUIStore } from '../store/useUIStore';
 
 const DashboardLayout = () => {
   const isDarkMode = useUIStore(state => state.isDarkMode);
 
   return (
-    <div className={`flex h-screen w-screen overflow-hidden ${isDarkMode ? 'bg-background-dark text-white' : 'bg-gray-100 text-gray-900'} font-sans`}>
+    <div className={`flex h-screen w-screen overflow-hidden ${isDarkMode ? 'dark bg-os-graphite text-white' : 'bg-gray-50 text-gray-900'} font-sans`}>
       <Sidebar />
-      <div className="flex flex-col flex-1 relative">
+      <div className="flex-1 flex flex-col overflow-hidden relative">
         <TopBar />
-        <main className="flex-1 overflow-y-auto relative">
-          {/* Outlet renders the matched child route */}
+        <main className="flex-1 overflow-auto relative z-0">
           <Outlet />
         </main>
       </div>
+      
+      {/* Global Command Palette */}
+      <CommandPalette />
     </div>
   );
 };
